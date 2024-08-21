@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import logo from "/logo.png";
 
 export default function Hero() {
@@ -12,9 +13,12 @@ export default function Hero() {
           Kutti CMS is a headless CMS that allows you to create, manage and
           deliver content to any platform.
         </p>
-        <button className="w-fit ml-2 rounded-full text-xl px-4 py-4 text-black font-semibold bg-primary">
+        <Link
+          to={"/auth"}
+          className="w-fit ml-2 rounded-full text-xl px-6 py-4 text-black font-semibold bg-primary"
+        >
           Get Started
-        </button>
+        </Link>
       </div>
       <div className="w-1/3">
         <img
