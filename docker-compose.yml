@@ -1,7 +1,4 @@
-version: '3.5'
-
 services:
-
   postgres:
     container_name: kutticms-postgres
     image: postgres
@@ -11,9 +8,15 @@ services:
       POSTGRES_PASSWORD: "password"
       PGDATA: /data/postgres
     volumes:
-       - postgres:/data/postgres
+      - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
       - postgres
     restart: unless-stopped
+
+volumes:
+  postgres:
+
+networks:
+  postgres:

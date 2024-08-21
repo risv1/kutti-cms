@@ -13,7 +13,7 @@ export default function Auth() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <main className="w-screen flex flex-col justify-center items-center h-screen bg-inherit overflow-hidden">
+      <main className="page-entry w-screen flex flex-col justify-center items-center h-screen bg-inherit overflow-hidden">
         {isLogin ? <EPLogin /> : <EPSignup />}
         <div className="w-full justify-center flex flex-row gap-3 my-7 items-center">
           <div className="w-[10%]  h-px bg-primary"></div>

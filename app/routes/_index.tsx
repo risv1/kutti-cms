@@ -7,7 +7,7 @@ const Footer = React.lazy(() => import("~/components/Common/Footer"));
 export default function Index() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <main className="w-screen flex flex-col h-screen bg-inherit overflow-scroll">
+      <main className="page-entry w-screen flex flex-col h-screen bg-inherit overflow-scroll">
         <Hero />
         <Features />
         <Footer />

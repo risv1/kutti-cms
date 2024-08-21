@@ -10,8 +10,8 @@ export default function Hero() {
           Welcome to Kutti CMS.
         </h1>
         <p className="ml-2 text-2xl text-gray-500">
-          Kutti CMS is a headless CMS that allows you to create, manage and
-          deliver content to any platform.
+          Kutti CMS is a simple content management system to manage digital
+          assets like images, videos, and docments.
         </p>
         <Link
           to={"/auth"}
