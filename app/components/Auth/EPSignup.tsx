@@ -31,7 +31,7 @@ const EPSignup: React.FC = () => {
         />
       </div>
       <button className="w-fit ml-2 rounded-full text-xl px-6 py-4 gap-3 text-black font-semibold bg-primary flex items-center hover:gap-6 transition-all duration-200">
-        Login
+        Signup
         <span className="w-full text-2xl font-bold ml-2 transform">&rarr;</span>
       </button>
     </Form>
