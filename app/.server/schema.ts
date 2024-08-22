@@ -9,7 +9,6 @@ export const users = pgTable("users", {
 
 export const sessions = pgTable("sessions", {
   id: text("id").primaryKey(),
-  session_id: text("session_id").unique().notNull(),
   user_id: text("user_id").notNull().references(()=>users.id),
   expires: timestamp("expires").notNull(),
   created_at: timestamp("created_at").notNull().defaultNow(),

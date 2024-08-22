@@ -20,15 +20,14 @@ function createDatabaseSessionStorage({cookie, host, port}: {
   return createSessionStorage<SessionData, SessionFlashData>({
     cookie, 
     async createData(data) {
-      const session_id = uuid().toString();
       try {
+        const id = uuid().toString()
         await db.insert(sessions).values({
-          id: uuid().toString(),
-          session_id: session_id,
+          id: id,
           user_id: data.userId!,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         });
-        return session_id;
+        return id
       } catch (error) {
         console.error(error);
         return "";
@@ -36,8 +35,9 @@ function createDatabaseSessionStorage({cookie, host, port}: {
     },
     async readData(sessionId) {
       const [session] = await db.select().from(sessions).where(
-        eq(sessions.session_id, sessionId)
+        eq(sessions.id, sessionId)
       );
+      if (!session) return null;
       return { userId: session.user_id };
     },
     async updateData(sessionId, data) {
@@ -45,14 +45,14 @@ function createDatabaseSessionStorage({cookie, host, port}: {
         await db.update(sessions).set({
           user_id: data.userId,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-        }).where(eq(sessions.session_id, sessionId));
+        }).where(eq(sessions.id, sessionId));
       } catch (error) {
         console.error(error);
       }
     },
     async deleteData(sessionId) {
       try {
-        await db.delete(sessions).where(eq(sessions.session_id, sessionId));
+        await db.delete(sessions).where(eq(sessions.id, sessionId));
       } catch (error) {
         console.error(error);
       }
