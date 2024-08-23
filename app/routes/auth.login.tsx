@@ -5,32 +5,33 @@ import { commitSession, getSession } from "~/sessions";
 
 export async function action({ request }: ActionFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
+  console.log(session.has("userId"))
   if (session.has("userId")) {
     return redirect("/dashboard");
-  }
+  } else {
+    const body = await request.formData();
+    const email = body.get("email") as string;
+    const password = body.get("password") as string;
 
-  const body = await request.formData();
-  const email = body.get("email") as string;
-  const password = body.get("password") as string;
+    try {
+      const userId = (await loginUser(email, password)) as string;
+      if (userId === null) {
+        session.flash("error", "Invalid email or password");
+        return redirect("/auth", {
+          headers: {
+            "Set-Cookie": await commitSession(session),
+          },
+        });
+      }
 
-  try {
-    const userId = (await loginUser(email, password)) as string;
-    if (userId === null) {
-      session.flash("error", "Invalid email or password");
-      return redirect("/auth", {
+      session.set("userId", userId);
+      return redirect("/dashboard", {
         headers: {
           "Set-Cookie": await commitSession(session),
         },
       });
+    } catch (error) {
+      return json({ errors: error }, { status: 401 });
     }
-
-    session.set("userId", userId);
-    return redirect("/dashboard", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  } catch (error) {
-    return json({ errors: error }, { status: 401 });
   }
 }

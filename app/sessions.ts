@@ -65,10 +65,10 @@ const { getSession, commitSession, destroySession } = createDatabaseSessionStora
   port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432,
   cookie: {
     name: "__session",
-    secure: true,
     httpOnly: true,
     sameSite: "lax",
     secrets: [process.env.SECRET!],
+    maxAge: 1000 * 60 * 60 * 24 * 7,
   }
 })
 
