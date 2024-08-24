@@ -5,7 +5,6 @@ import { commitSession, getSession } from "~/sessions";
 
 export async function action({ request }: ActionFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
-  console.log(session.has("userId"))
   if (session.has("userId")) {
     return redirect("/dashboard");
   } else {

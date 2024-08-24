@@ -1,4 +1,5 @@
 import React, { Suspense, useState } from "react";
+import Loader from "~/components/Common/Loader";
 
 const EPLogin = React.lazy(() => import("~/components/Auth/EPLogin"));
 const GoogleLogin = React.lazy(() => import("~/components/Auth/GoogleLogin"));
@@ -12,7 +13,7 @@ export default function Auth() {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <main className="page-entry w-screen flex flex-col justify-center items-center h-screen bg-inherit overflow-hidden">
         {isLogin ? <EPLogin /> : <EPSignup />}
         <div className="w-full justify-center flex flex-row gap-3 my-7 items-center">

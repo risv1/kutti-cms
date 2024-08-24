@@ -1,13 +1,16 @@
 import {
+  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteError,
 } from "@remix-run/react";
 import "./tailwind.css";
 import { LinksFunction } from "@remix-run/node";
 import { Toaster } from "react-hot-toast";
+import Error from "./components/Common/Error";
 
 export const links: LinksFunction = () => {
   return [{ rel: "icon", href: "/logo.png" }];
@@ -41,4 +44,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return <Outlet />;
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError()
+
+  if (isRouteErrorResponse(error)){
+    return (
+      <Error text={error.statusText} status={error.status} data={error.data} />
+    )
+  }
+
+  return (
+    <>
+      <h1>Error!</h1>
+      <p>{"Unknown error"}</p>
+    </>
+  );
 }

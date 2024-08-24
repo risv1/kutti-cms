@@ -2,6 +2,10 @@ import { redirect, type ActionFunctionArgs } from "@remix-run/node";
 import { getSession } from "~/sessions";
 
 export async function action({ request }: ActionFunctionArgs) {
+    const session = await getSession(request.headers.get("Cookie"));
+    if (session) {
+        return redirect("/dashboard");
+    }
     const state = "state-" + Math.random().toString(36).substring(7);
     const scopes = [
         "https://www.googleapis.com/auth/userinfo.email",
@@ -14,6 +18,5 @@ export async function action({ request }: ActionFunctionArgs) {
     googleConsentScreenUrl.searchParams.set("scope", scopes);
     googleConsentScreenUrl.searchParams.set("state", state);
 
-    const session = await getSession(request.headers.get("Cookie"));
     return redirect(googleConsentScreenUrl.toString());
 }
