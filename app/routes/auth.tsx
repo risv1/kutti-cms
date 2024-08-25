@@ -17,7 +17,7 @@ export default function Auth() {
       <main className="page-entry w-screen flex flex-col justify-center items-center h-screen bg-inherit overflow-hidden">
         {isLogin ? <EPLogin /> : <EPSignup />}
         <div className="w-full justify-center flex flex-row gap-3 my-7 items-center">
-          <div className="w-[10%]  h-px bg-primary"></div>
+          <div className="w-[10%] h-px bg-primary"></div>
           <span className="px-4 text-primary font-medium">OR</span>
           <div className="w-[10%] h-px bg-primary"></div>
         </div>

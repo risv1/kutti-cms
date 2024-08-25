@@ -3,7 +3,7 @@ import { getSession } from "~/sessions";
 
 export async function action({ request }: ActionFunctionArgs) {
     const session = await getSession(request.headers.get("Cookie"));
-    if (session) {
+    if (session.has("userId")) {
         return redirect("/dashboard");
     }
     const state = "state-" + Math.random().toString(36).substring(7);

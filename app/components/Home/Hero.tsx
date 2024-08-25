@@ -14,7 +14,7 @@ export default function Hero() {
           assets like images, videos, and docments.
         </p>
         <Link
-          to={"/auth"}
+          to={"/dashboard"}
           className="w-fit ml-2 rounded-full text-xl px-6 py-4 text-black font-semibold bg-primary"
         >
           Get Started
