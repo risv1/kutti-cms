@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import Loader from "~/components/Common/Loader";
 
 const EPLogin = React.lazy(() => import("~/components/Auth/EPLogin"));
@@ -6,7 +6,7 @@ const GoogleLogin = React.lazy(() => import("~/components/Auth/GoogleLogin"));
 const EPSignup = React.lazy(() => import("~/components/Auth/EPSignup"));
 
 export default function Auth() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = React.useState(true);
 
   const switchLogin = () => {
     setIsLogin(!isLogin);

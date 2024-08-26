@@ -12,15 +12,21 @@ type SessionFlashData = {
   error?: string;
 };
 
-function createDatabaseSessionStorage({cookie, host, port}: {
+function createDatabaseSessionStorage({ cookie, host, port }: {
   cookie: any,
   host: string,
   port: number
-}){
+}) {
   return createSessionStorage<SessionData, SessionFlashData>({
-    cookie, 
+    cookie,
     async createData(data) {
       try {
+        const [checkExisingSession] = await db.select().from(sessions).where(
+          eq(sessions.user_id, data.userId!)
+        );
+        if (checkExisingSession) {
+          return checkExisingSession.id;
+        }
         const id = uuid().toString()
         await db.insert(sessions).values({
           id: id,
@@ -72,4 +78,6 @@ const { getSession, commitSession, destroySession } = createDatabaseSessionStora
   }
 })
 
-export { getSession, commitSession, destroySession };
+const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+
+export { getSession, commitSession, destroySession, expires };

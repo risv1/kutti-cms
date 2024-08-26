@@ -1,6 +1,36 @@
-import { Link } from "@remix-run/react"
+import { Form, Link, useFetcher } from "@remix-run/react"
 import React from "react"
 import SearchPosts from "./SearchPosts"
+
+const Profile: React.FC = () => {
+    const [showProfile, setShowProfile] = React.useState(false)
+    const fetcher = useFetcher()
+
+    const toggleProfile = () => {
+        setShowProfile(!showProfile)
+    }
+
+    const logout = () => {
+        localStorage.removeItem("userEmail")
+        fetcher.submit(null, {
+            method: "POST",
+            action: "/auth/logout"
+        })
+    }
+
+    return (
+        <>
+            <img onClick={toggleProfile} src="/user.png" alt="Avatar" className="w-10 h-10 hover:cursor-pointer p-1" />
+            {
+                showProfile && <div className="flex flex-col gap-3 absolute top-[11.5%] right-5 px-5 py-3 bg-neutral-950 border border-neutral-800 rounded-lg">
+                    <span className="text-white text-lg font-semibold">{localStorage.getItem("userEmail")?.toString()}</span>
+                    <button onClick={logout} className="text-red-700 hover:cursor-pointer text-sm font-medium">
+                        Logout</button>
+                </div>
+            }
+       </>
+    )
+}
 
 const Navbar: React.FC = () => {
     return (
@@ -11,6 +41,7 @@ const Navbar: React.FC = () => {
                 <Link to="/dashboard" className="hover:text-white ease-out duration-150 text-gray-500 text-xl font-medium">Dashboard</Link>
                 <Link to="/dashboard/organizations" className="hover:text-white ease-out duration-150 text-gray-500  text-xl font-medium">Organizations</Link>
                 <Link to={"/dashboard/posts"} className="hover:text-white ease-out duration-150 text-gray-500 text-xl font-medium">Posts</Link>
+                <Profile />
             </div>
         </nav>
     )

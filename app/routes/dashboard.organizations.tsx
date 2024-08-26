@@ -14,7 +14,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function DashboardOrganizations() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-        <h1 className="text-3xl font-semibold text-primary">Organizations</h1>
+            <h1 className="text-3xl font-semibold text-primary">Organizations</h1>
         </Suspense>
     )
 }

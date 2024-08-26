@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, redirect, json } from "@remix-run/node";
-import { Outlet } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import React from "react";
 import { Suspense } from "react";
 import Loader from "~/components/Common/Loader";
@@ -13,10 +13,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
         return redirect("/auth");
     }
 
+    const email = new URL(request.url).searchParams.get("email")
+    if (email) {
+        return json({ message: "Welcome to the dashboard", email: decodeURIComponent(email) });
+    }
+
     return json({ message: "Welcome to the dashboard" });
 }
 
 export default function Dashboard() {
+    const loaderData: {
+        message: string;
+        email: string;
+    } = useLoaderData()
+
+    React.useEffect(()=> {
+        if(loaderData.email) {
+            localStorage.setItem("userEmail", loaderData.email)
+        }
+    }, [loaderData])
+    
     return (
         <Suspense fallback={<Loader />}>
             <DashLayout>

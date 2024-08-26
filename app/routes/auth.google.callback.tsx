@@ -1,8 +1,10 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import { eq } from "drizzle-orm";
+import React from "react";
 import { db } from "~/.server/db";
 import { users } from "~/.server/schema";
-import { commitSession, getSession } from "~/sessions";
+import { commitSession, expires, getSession } from "~/sessions";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const session = await getSession(request.headers.get("Cookie"));
@@ -46,9 +48,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
         const [checkUserEmail] = await db.select().from(users).where(eq(users.email, userEmail))
         if (checkUserEmail) {
             session.set("userId", checkUserEmail.id);
-            return redirect("/dashboard", {
+            return redirect(`/dashboard?email=${encodeURIComponent(userEmail)}`, {
                 headers: {
-                    "Set-Cookie": await commitSession(session),
+                    "Set-Cookie": await commitSession(session, {
+                        expires: expires
+                    }),
                 },
             });
         }
@@ -60,9 +64,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
             });
 
             session.set("userId", userId);
-            return redirect("/dashboard", {
+            return redirect(`/dashboard?email=${encodeURIComponent(userEmail)}`, {
                 headers: {
-                    "Set-Cookie": await commitSession(session),
+                    "Set-Cookie": await commitSession(session, {
+                        expires: expires
+                    }),
                 },
             });
         } catch (error) {

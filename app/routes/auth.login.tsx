@@ -1,7 +1,7 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { redirect, json } from "@remix-run/node";
+import { redirect, json, createCookie } from "@remix-run/node";
 import { loginUser } from "~/.server/auth";
-import { commitSession, getSession } from "~/sessions";
+import { commitSession, expires, getSession } from "~/sessions";
 
 export async function action({ request }: ActionFunctionArgs) {
   const session = await getSession(request.headers.get("Cookie"));
@@ -16,17 +16,26 @@ export async function action({ request }: ActionFunctionArgs) {
       const userId = (await loginUser(email, password)) as string;
       if (userId === null) {
         session.flash("error", "Invalid email or password");
+        
+        const sessionCookieHeader = await commitSession(session, {
+          expires: expires
+        });
+        
         return redirect("/auth", {
           headers: {
-            "Set-Cookie": await commitSession(session),
+            "Set-Cookie": sessionCookieHeader
           },
         });
       }
 
       session.set("userId", userId);
-      return redirect("/dashboard", {
+      const sessionCookieHeader = await commitSession(session, {
+        expires: expires
+      });
+
+      return redirect(`/dashboard?email=${email}`, {
         headers: {
-          "Set-Cookie": await commitSession(session),
+          "Set-Cookie": sessionCookieHeader
         },
       });
     } catch (error) {
