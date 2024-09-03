@@ -16,7 +16,7 @@ const SearchPosts: React.FC = () => {
     }
 
     return (
-        <Form onSubmit={handleSubmit} className="w-fit h-fit px-3 py-3 flex flex-row items-center border bg-inherit border-gray-700 gap-3 rounded-full">
+        <Form onSubmit={handleSubmit} className="w-fit h-fit px-3 py-3 flex flex-row items-center border bg-inherit border-gray-600 gap-3 rounded-full">
             <Search color='gray' />
             <input value={searchQuery} onChange={handleQueryChange} type="text" placeholder="Search posts" className="bg-inherit focus:outline-none w-full h-full text-white" />
         </Form>

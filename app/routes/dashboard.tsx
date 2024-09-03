@@ -27,12 +27,12 @@ export default function Dashboard() {
         email: string;
     } = useLoaderData()
 
-    React.useEffect(()=> {
-        if(loaderData.email) {
+    React.useEffect(() => {
+        if (loaderData.email) {
             localStorage.setItem("userEmail", loaderData.email)
         }
     }, [loaderData])
-    
+
     return (
         <Suspense fallback={<Loader />}>
             <DashLayout>

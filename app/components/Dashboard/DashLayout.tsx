@@ -10,7 +10,9 @@ const DashLayout: React.FC<LayoutProps> = ({ children }: { children: React.React
     return (
         <main className="page-entry w-screen flex flex-col h-screen bg-inherit overflow-y-scroll">
             <Navbar />
-            {children}
+            <div className="p-5 w-full h-full">
+                {children}
+            </div>
             <div className="mt-auto">
                 <Footer />
             </div>

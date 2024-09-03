@@ -1,7 +1,5 @@
-import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { eq } from "drizzle-orm";
-import React from "react";
 import { db } from "~/.server/db";
 import { users } from "~/.server/schema";
 import { commitSession, expires, getSession } from "~/sessions";
