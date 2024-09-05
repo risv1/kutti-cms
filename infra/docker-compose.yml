@@ -1,0 +1,28 @@
+services:
+  postgres:
+   container_name: kutticms-postgres
+   image: postgres
+   environment:
+     POSTGRES_DB: "postgres"
+     POSTGRES_USER: "root"
+     POSTGRES_PASSWORD: "password"
+     PGDATA: /data/postgres
+   volumes:
+     - postgres:/data/postgres
+   ports:
+     - "5432:5432"
+   networks:
+     - postgres
+   restart: unless-stopped
+
+  localstack:
+    container_name: kutticms-localstack
+    image: localstack/localstack:latest
+    ports:
+      - 4566:4566
+
+volumes:
+  postgres:
+
+networks:
+  postgres:

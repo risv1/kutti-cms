@@ -4,3 +4,7 @@ node_modules
 /build
 .env
 drizzle/
+
+.terraform
+terraform.tfstate
+.terraform.lock.hcl
