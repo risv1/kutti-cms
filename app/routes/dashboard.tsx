@@ -36,7 +36,6 @@ export default function Dashboard() {
     return (
         <Suspense fallback={<Loader />}>
             <DashLayout>
-                <h1 className="text-3xl font-semibold text-primary">Dashboard</h1>
                 <Outlet />
             </DashLayout>
         </Suspense>

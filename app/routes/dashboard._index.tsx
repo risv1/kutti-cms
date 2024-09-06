@@ -4,25 +4,11 @@ import React, { Suspense } from 'react'
 import { fetchOrganizations } from '~/.server/organizations'
 import { fetchPublicPosts } from '~/.server/posts'
 import Loader from '~/components/Common/Loader'
+import { Organization } from '~/models/organizations'
+import { Post } from '~/models/posts'
 import { getSession } from '~/sessions'
 
 const DashCard = React.lazy(() => import('~/components/Dashboard/DashCard'))
-
-type Organization = {
-    id: string,
-    name: string,
-    owner: string,
-    created_at: string
-}
-
-type Post = {
-    id: string,
-    email: string,
-    title: string,
-    description: string,
-    objectURL: string,
-    created_at: string
-}
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const cookie = await getSession(request.headers.get("Cookie"))
@@ -99,16 +85,19 @@ export default function DashboardIndex() {
                 <div className="flex flex-col w-full h-full gap-3 justify-between">
                     <div className='h-3/5'>
                         <DashCard title="Add Post" icon="/logo.png">
-                            <div className="w-full flex justify-center items-center">
-                                <Link to={"/dashboard/create-post"} className='w-1/2 flex justify-center items-center h-10 bg-primary rounded-md'>Create</Link>
+                            <div className="w-full flex justify-center flex-col gap-5 items-center">
+                                <p className="text-white w-2/3 text-center">Create a new post for everyone to see, or for a specific organization.</p>
+                                <Link to={"/dashboard/create-post"} className='w-fit flex justify-center items-center h-fit font-extralight py-2 px-8 bg-primary bg-opacity-50 rounded-full text-[#ff00fb] border border-[#ff00fb]'>Create</Link>
                             </div>
                         </DashCard>
                     </div>
                     <DashCard title="Organizations" icon="/logo.png">
                         <div className="w-full h-full flex flex-col gap-5">
-                            {organizations.length === 0 && <div className="w-full h-full flex justify-center items-center">
-                                <p>No organizations found</p>
-                            </div>}
+                            {organizations.length === 0 && <div className="w-full h-full flex gap-5 justify-center flex-col items-center">
+                                <p>Create an organization</p>
+                                <Link to="/dashboard/create-organization" className='w-fit flex justify-center items-center h-fit font-extralight py-2 px-8 bg-primary bg-opacity-50 rounded-full text-[#ff00fb] border border-[#ff00fb]'>Create</Link>
+                            </div>
+                            }
                             {organizations.map((org, index) => (
                                 <ListItem key={index} name={org.name} owner={org.owner} />
                             ))}

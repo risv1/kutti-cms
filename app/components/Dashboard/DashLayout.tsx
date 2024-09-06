@@ -6,7 +6,7 @@ type LayoutProps = {
     children: React.ReactNode;
 };
 
-const DashLayout: React.FC<LayoutProps> = ({ children }: { children: React.ReactNode }) => {
+const DashLayout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <main className="page-entry w-screen flex flex-col h-screen bg-inherit overflow-y-scroll">
             <Navbar />

@@ -24,6 +24,35 @@ body {
   animation: fadeIn 0.8s ease-in-out;
 }
 
+.custom-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #1f2937;
+  border: 2px solid #4b5563; 
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked {
+  background-color: #c902c6;
+  border-color: #c902c6;
+}
+
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
