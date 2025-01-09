@@ -13,7 +13,6 @@ const CreatePost: React.FC<{
   return (
     <Form
       method="post"
-      encType="multipart/form-data"
       className="w-full max-w-md p-5 rounded-xl flex flex-col items-center gap-4 bg-neutral-950 border border-neutral-900 ease-in-out duration-150 hover:border-primary"
     >
       <h1 className="text-2xl font-bold text-white">Create Post</h1>

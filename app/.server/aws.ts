@@ -25,10 +25,6 @@ const client = new S3Client({
 })
 
 export const putIntoS3 = async (key: string, body: string) => {
-    console.log("S3 Endpoint:", process.env.TF_VAR_S3_LOCATION);
-    console.log("S3 Region:", process.env.TF_VAR_REGION);
-    console.log("S3 Access Key:", process.env.TF_VAR_ACCESS_KEY);
-    console.log("S3 Secret Key:", process.env.TF_VAR_SECRET_KEY);
     try {
         const command = new PutObjectCommand({
             Bucket: process.env.TF_VAR_BUCKET_NAME,

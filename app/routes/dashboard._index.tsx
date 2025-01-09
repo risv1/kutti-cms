@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, redirect } from '@remix-run/node'
+import { LoaderFunctionArgs, redirect, json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import React, { Suspense } from 'react'
 import { fetchOrganizations } from '~/.server/organizations'
@@ -17,15 +17,19 @@ export async function loader({ request }: LoaderFunctionArgs) {
     }
 
     const userId = cookie.get("userId") as string
-    const organizations = await fetchOrganizations(userId)
-    if (organizations instanceof Error) return { organizations: [], posts: [], error: organizations.message }
-    const posts = await fetchPublicPosts()
-    if (posts instanceof Error) return { organizations: [], posts: [], error: posts.message }
+    let organizations = await fetchOrganizations(userId)
+    if (organizations instanceof Error){
+        organizations = []
+    }  
+    let posts = await fetchPublicPosts()
+    if (posts instanceof Error) {
+        posts = []
+    }
 
-    return {
+    return json({
         organizations,
         posts
-    }
+    })
 }
 
 const PostItem: React.FC<{
